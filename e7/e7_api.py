@@ -20,6 +20,5 @@ if __name__ == '__main__':
     print(f"   GET  /status                - Returns damaged system info")
     print(f"   GET  /repair-bay            - Returns HTML with anchor point")
     print(f"   POST /teapot                - Returns HTTP 418 status")
-    print(f"   GET  /phase-change-diagram  - Returns P-v diagram data (Phase 2)")
     register_blueprints()
     app.run(debug=False, host='0.0.0.0', port=Constants.get("PORT", 5000))
