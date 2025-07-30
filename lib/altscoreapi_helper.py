@@ -21,7 +21,7 @@ class AltScoreApiHelper:
             country: str,
             email: str,
             apply_role: str
-    ) -> Dict[str, Any]:
+    ) -> Dict[str, str]:
         payload = {
             "alias": alias,
             "country": country,
@@ -79,7 +79,7 @@ class AltScoreApiHelper:
             self,
             sort_by: str = "id",
             sort_direction: str = "desc"
-    ) -> List[Dict[str, str]]:
+    ) -> List[Dict[str, Union[str, float, int]]]:
         data = []
         page_number = 1
         total_stars = 1e3 # Unknown until the first GET request
@@ -120,11 +120,6 @@ class AltScoreApiHelper:
             self,
             sw_people: Dict[str, Dict[str, str]]
     ) -> None:
-        """
-        Get the Rolodex Prediction for all StarWars people
-        :param sw_people:
-            StarWars People information in a Dictionary
-        """
         url = self.API_URL + "s1/e3/resources/oracle-rolodex?name={name}"
         for name in sw_people:
             response = requests.get(
@@ -150,7 +145,9 @@ class AltScoreApiHelper:
         else:
             raise Exception(response.json())
 
-    def s1_e4_get_user_and_password(self):
+    def s1_e4_get_user_and_password(
+            self
+    ) -> Tuple[Optional[str], Optional[str]]:
         url = "https://makers-challenge.altscore.ai/s1e4"
         response = requests.get(url)
         html = response.text
@@ -235,7 +232,7 @@ class AltScoreApiHelper:
             return False
         raise Exception(response.json())
 
-    def s1_e6_send_solution(self, pokemon_heights: Dict[str, float]):
+    def s1_e6_send_solution(self, pokemon_heights: Dict[str, float]) -> bool:
         payload = {
             "heights": json.loads(json.dumps(pokemon_heights, sort_keys=True))
         }

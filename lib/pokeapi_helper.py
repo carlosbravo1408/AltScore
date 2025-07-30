@@ -1,4 +1,4 @@
-from typing import Dict, Any
+from typing import Dict, Any, Union, List
 
 import requests
 
@@ -16,7 +16,10 @@ class PokeApiHelper:
         return types
 
     @classmethod
-    def get_pokemon_data(cls, pokemon_url: str):
+    def get_pokemon_data(
+            cls,
+            pokemon_url: str
+    ) -> Dict[str, Union[List[str], float, str]]:
         response = requests.get(pokemon_url)
         response.raise_for_status()
         pokemon_data = response.json()
@@ -32,7 +35,7 @@ class PokeApiHelper:
             pokemon_collection: Dict[str, Any],
             offset: int,
             limit: int = 100
-    ):
+    ) -> None:
         url = f"https://pokeapi.co/api/v2/pokemon/?offset={offset}&limit={limit}"
         response = requests.get(url)
         response.raise_for_status()
